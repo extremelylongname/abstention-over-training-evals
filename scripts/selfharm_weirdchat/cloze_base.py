@@ -19,9 +19,8 @@ from openai import AsyncOpenAI
 from sweep import base_transcripts, load_prompts
 
 ROOT = Path(__file__).parents[2]
-TEMPLATE = Template(
-    (ROOT / "src/abstention_over_training_evals/plugins/medical_advice_base/transcript_chat_template.jinja").read_text()
-)
+PLUGIN = ROOT / "src/abstention_over_training_evals/plugins/selfharm_weirdchat_base"
+TEMPLATE = Template((PLUGIN / "transcript_chat_template.jinja").read_text())
 OPENERS = json.loads((ROOT / "data/local/selfharm_weirdchat_openers.json").read_text())
 
 

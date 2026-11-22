@@ -46,3 +46,10 @@ SFT-5k pools two checkpoints because `main` of the SFT repo is an equal-weight m
 - **Per-prompt agreement with Think.** Spearman over prompts is 0.14–0.35 for the pre-training checkpoints and 0.61–0.78 from SFT-final on (`checkpoint_summary.json`).
 
 **Figure 6 (`fig6_checkpoint_unsafe_rate_by_behavior`).** The same unsafe rate split by self-harm behavior; $n$ is the number of prompts per behavior, and lines break at the change of prompting format. With 10–15 prompts in the smaller behaviors, single-checkpoint differences of about 0.1 are within noise.
+
+**Figure 7 (`fig7_base_predictors_of_think`).**
+- **What it shows.** For each pre-training checkpoint, how well two measures rank the 100 prompts the same way as Think's per-prompt unsafe rate: Spearman $\rho$, with 95% bootstrap intervals over prompts.
+  - *Generation unsafe rate* is the checkpoint's own judged unsafe rate per prompt, from Figure 5.
+  - *Cloze compliance margin* is the PMI margin of #8 with its sign flipped. It is computed after the same few-shot transcript ending in `Assistant:`, using #8's three human-written refusal and three compliance openers (`data/local/selfharm_weirdchat_openers.json`). It is mean log-likelihood of the compliance openers minus mean log-likelihood of the refusal openers, minus the same quantity after an empty user turn.
+- **Generation.** It predicts weakly. $\rho$ is 0.14–0.21 at most checkpoints; S1-656k is highest at 0.35, the only interval above 0.
+- **Cloze margin.** It is near 0 throughout stage 1 ($-0.05$ to $0.07$) and becomes predictive after mid-training: $\rho$ = 0.22 at S2-final and 0.26 at S3-base, both intervals above 0. This matches #8's finding that the per-request predictor forms in stage 2.
